@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookmark Manager Pro</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <h3>Bookmark Pro</h3>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Tema Değiştir">
+                    <span class="theme-icon">🌓</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="toolbar">
+                <select id="folder-select" aria-label="Yer İmi Klasörü Seçin">
+                    <option value="">Klasör Seçiniz</option>
+                </select>
+                <button id="check-links" class="icon-btn" title="Linkleri Kontrol Et">
+                    <span class="icon">🔍</span>
+                </button>
+            </div>
+
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <span class="stat-icon">📑</span>
+                    <span class="stat-value" id="totalLinks">0</span>
+                    <span class="stat-label">Toplam</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">❌</span>
+                    <span class="stat-value" id="invalidLinks">0</span>
+                    <span class="stat-label">Geçersiz</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">✓</span>
+                    <span class="stat-value" id="checkedLinks">0</span>
+                    <span class="stat-label">Kontrol Edilen</span>
+                </div>
+            </div>
+
+            <div class="progress-container hidden">
+                <div class="progress-info">
+                    <span class="progress-text">İşleniyor...</span>
+                    <span class="progress-count">0/0</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+
+            <div class="bookmark-list">
+                <div class="loading-spinner hidden"></div>
+                <div class="bookmarks-container">
+                    <!-- Yer imleri buraya gelecek -->
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button id="save-tabs" class="action-btn primary">
+                    <span class="icon">💾</span>
+                    <span>Sekmeleri Kaydet</span>
+                </button>
+                <button id="save-live" class="action-btn secondary">
+                    <div class="button-content">
+                        <span class="icon">📥</span>
+                        <span class="text">Canlı Kaydet</span>
+                    </div>
+                    <div class="spinner hidden"></div>
+                </button>
+                <button id="delete-tabs" class="action-btn danger">
+                    <span class="icon">🗑️</span>
+                    <span>Çoklu Sil</span>
+                </button>
+                <button id="export-folder" class="action-btn export">
+                    <span class="icon">📤</span>
+                    <span>Dışa Aktar</span>
+                </button>
+                <button id="import-data" class="action-btn import">
+                    <span class="icon">📥</span>
+                    <span>İçe Aktar</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="status" class="status"></div>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-text">
+                    <span>Made with ❤️ by </span>
+                    <a href="https://github.com/MihrimatriX" rel="noopener" target="_blank" class="footer-link">By MihrimatriX</a>
+                </div>
+                <div class="footer-version">v1.0</div>
+            </div>
+        </footer>
+    </div>
+    <script src="popup.js"></script>
+</body>
+
+</html>
