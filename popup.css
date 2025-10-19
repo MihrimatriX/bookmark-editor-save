@@ -39,8 +39,8 @@
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
     margin: 0;
-    min-width: 450px;
-    max-width: 600px;
+    min-width: 400px;
+    max-width: 500px;
     min-height: 550px;
     background-color: var(--surface-color);
     color: var(--text-color);
@@ -103,6 +103,292 @@ h3 {
     grid-template-columns: 1fr auto;
     gap: 10px;
     padding: 8px;
+}
+
+/* Export/Import Panel */
+.export-import-panel {
+    padding: 12px;
+    background: var(--surface-color);
+    border-radius: 8px;
+    box-shadow: var(--neumorphism-shadow-inset);
+    margin: 0 8px;
+    transition: all 0.3s ease;
+}
+
+.panel-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+    background: var(--surface-color);
+    border-radius: 8px;
+    padding: 4px;
+    box-shadow: var(--neumorphism-shadow-inset);
+}
+
+.panel-tab {
+    flex: 1;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.panel-tab.active {
+    background: var(--surface-color);
+    color: var(--primary-color);
+    box-shadow: var(--neumorphism-shadow);
+}
+
+.panel-content {
+    display: none;
+}
+
+.panel-content.active {
+    display: block;
+}
+
+.option-group {
+    margin-bottom: 12px;
+}
+
+.option-group label {
+    display: block;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.option-group select {
+    width: 100%;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    background: var(--surface-color);
+    box-shadow: var(--neumorphism-shadow);
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 12px;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 12px;
+    padding-right: 28px;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.checkbox-group .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.checkbox-group .checkbox-label input[type="checkbox"] {
+    margin: 0;
+}
+
+/* File Drop Zone */
+.file-drop-zone {
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 12px 0;
+    background: var(--surface-color);
+    box-shadow: var(--neumorphism-shadow-inset);
+}
+
+.file-drop-zone:hover {
+    border-color: var(--primary-color);
+    background: var(--highlight-color);
+}
+
+.file-drop-zone.dragover {
+    border-color: var(--primary-color);
+    background: var(--primary-color);
+    color: white;
+}
+
+.drop-zone-content .icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.drop-zone-content p {
+    margin: 4px 0;
+    font-size: 12px;
+}
+
+.file-info {
+    color: var(--text-secondary);
+    font-size: 10px !important;
+}
+
+/* Preview Sections */
+.export-preview,
+.import-preview {
+    margin: 12px 0;
+    padding: 12px;
+    background: var(--surface-color);
+    border-radius: 6px;
+    box-shadow: var(--neumorphism-shadow);
+}
+
+.export-preview h4,
+.import-preview h4 {
+    margin: 0 0 8px 0;
+    font-size: 13px;
+    color: var(--text-color);
+}
+
+.preview-content {
+    max-height: 200px;
+    overflow-y: auto;
+    font-family: monospace;
+    font-size: 11px;
+    background: var(--surface-color);
+    padding: 8px;
+    border-radius: 4px;
+    box-shadow: var(--neumorphism-shadow-inset);
+    white-space: pre-wrap;
+}
+
+.preview-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.preview-stat {
+    text-align: center;
+    padding: 8px;
+    background: var(--surface-color);
+    border-radius: 4px;
+    box-shadow: var(--neumorphism-shadow);
+}
+
+.preview-stat .label {
+    font-size: 10px;
+    color: var(--text-secondary);
+    display: block;
+}
+
+.preview-stat .value {
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--primary-color);
+    display: block;
+}
+
+.preview-list {
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.preview-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 8px;
+    margin-bottom: 4px;
+    background: var(--surface-color);
+    border-radius: 4px;
+    box-shadow: var(--neumorphism-shadow);
+    font-size: 11px;
+}
+
+.preview-item .title {
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+.preview-item .status {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: var(--primary-color);
+    color: white;
+}
+
+.preview-item .status.warning {
+    background: var(--secondary-color);
+}
+
+.preview-item .status.error {
+    background: var(--danger-color);
+}
+
+/* Action Buttons in Panels */
+.export-actions,
+.import-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.export-actions .action-btn,
+.import-actions .action-btn {
+    flex: 1;
+    height: 36px;
+    font-size: 11px;
+}
+
+.sorting-controls {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr;
+    gap: 8px;
+    align-items: center;
+}
+
+.sorting-controls label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.sorting-controls select {
+    padding: 6px 8px;
+    border: none;
+    border-radius: 6px;
+    background: var(--surface-color);
+    box-shadow: var(--neumorphism-shadow);
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 12px;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 6px center;
+    background-size: 12px;
+    padding-right: 24px;
+}
+
+[data-theme="dark"] .sorting-controls select {
+    color: var(--text-color);
+    background-color: var(--surface-color);
 }
 
 #folder-select {
@@ -231,20 +517,292 @@ h3 {
     text-overflow: ellipsis;
 }
 
+.bookmark-domain {
+    font-size: 10px;
+    color: var(--primary-color);
+    font-weight: 500;
+    margin-top: 2px;
+}
+
 /* Action Buttons */
 .action-buttons {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
-    padding: 8px 12px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    padding: 6px 8px;
     background: var(--surface-color);
 }
 
-.action-btn {
-    height: 42px;
-    padding: 0 14px;
+/* Secondary Actions */
+.secondary-actions {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 6px 8px;
+    background: var(--surface-color);
+    border-top: 1px solid var(--border-color);
+}
+
+/* Search Section */
+.search-section {
+    padding: 12px;
+    background: var(--surface-color);
+    border-radius: 8px;
+    box-shadow: var(--neumorphism-shadow-inset);
+    margin: 0 8px;
+    transition: all 0.3s ease;
+}
+
+.search-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.search-input-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+#search-input {
+    flex: 1;
+    padding: 8px 12px;
     border: none;
     border-radius: 8px;
+    background: var(--surface-color);
+    box-shadow: var(--neumorphism-shadow);
+    color: var(--text-color);
+    font-size: 14px;
+}
+
+#search-input:focus {
+    outline: none;
+    box-shadow: var(--neumorphism-shadow-inset);
+}
+
+.search-filters {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.search-filters select {
+    padding: 6px 8px;
+    border: none;
+    border-radius: 6px;
+    background: var(--surface-color);
+    box-shadow: var(--neumorphism-shadow);
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 12px;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 6px center;
+    background-size: 12px;
+    padding-right: 24px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+    margin: 0;
+}
+
+.search-results-info {
+    margin-top: 8px;
+    padding: 6px 12px;
+    background: var(--surface-color);
+    border-radius: 6px;
+    box-shadow: var(--neumorphism-shadow);
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+/* Statistics Section */
+.statistics-section {
+    padding: 12px;
+    background: var(--surface-color);
+    border-radius: 8px;
+    box-shadow: var(--neumorphism-shadow-inset);
+    margin: 0 8px;
+    transition: all 0.3s ease;
+}
+
+.stats-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 12px;
+    background: var(--surface-color);
+    border-radius: 8px;
+    padding: 4px;
+    box-shadow: var(--neumorphism-shadow-inset);
+}
+
+.stats-tab {
+    flex: 1;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.stats-tab.active {
+    background: var(--surface-color);
+    color: var(--primary-color);
+    box-shadow: var(--neumorphism-shadow);
+}
+
+.stats-content {
+    min-height: 200px;
+}
+
+.stats-panel {
+    display: none;
+}
+
+.stats-panel.active {
+    display: block;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.stat-item {
+    padding: 12px;
+    background: var(--surface-color);
+    border-radius: 8px;
+    box-shadow: var(--neumorphism-shadow);
+    text-align: center;
+}
+
+.stat-item .stat-label {
+    display: block;
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.stat-item .stat-value {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Domain Stats */
+.domain-stats {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.domain-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    background: var(--surface-color);
+    border-radius: 6px;
+    box-shadow: var(--neumorphism-shadow);
+}
+
+.domain-name {
+    font-size: 13px;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.domain-count {
+    font-size: 12px;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* Date Stats */
+.date-stats {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.date-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    background: var(--surface-color);
+    border-radius: 6px;
+    box-shadow: var(--neumorphism-shadow);
+}
+
+.date-period {
+    font-size: 13px;
+    color: var(--text-color);
+}
+
+.date-count {
+    font-size: 12px;
+    color: var(--secondary-color);
+    font-weight: bold;
+}
+
+/* Usage Stats */
+.usage-stats {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.usage-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    background: var(--surface-color);
+    border-radius: 6px;
+    box-shadow: var(--neumorphism-shadow);
+}
+
+.usage-title {
+    font-size: 13px;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+.usage-count {
+    font-size: 12px;
+    color: var(--danger-color);
+    font-weight: bold;
+}
+
+.action-btn {
+    height: 36px;
+    padding: 0 8px;
+    border: none;
+    border-radius: 6px;
     background: var(--surface-color);
     box-shadow: var(--neumorphism-shadow);
     color: var(--text-color);
@@ -253,13 +811,23 @@ h3 {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 4px;
-    font-size: 11px;
+    gap: 3px;
+    font-size: 10px;
     font-weight: 500;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.action-btn span:not(.icon) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
 .action-btn .icon {
-    font-size: 13px;
+    font-size: 11px;
+    flex-shrink: 0;
 }
 
 /* Buton renkleri */
