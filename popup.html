@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookmark Manager Pro</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <h3>Bookmark Pro</h3>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Tema Değiştir">
+                    <span class="theme-icon">🌓</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="toolbar">
+                <select id="folder-select" aria-label="Yer İmi Klasörü Seçin">
+                    <option value="">Klasör Seçiniz</option>
+                </select>
+                <button id="check-links" class="icon-btn" title="Linkleri Kontrol Et">
+                    <span class="icon">🔍</span>
+                </button>
+            </div>
+
+            <!-- Export/Import Paneli -->
+            <div class="export-import-panel hidden" id="export-import-panel">
+                <div class="panel-tabs">
+                    <button class="panel-tab active" data-panel="export">📤 Dışa Aktar</button>
+                    <button class="panel-tab" data-panel="import">📥 İçe Aktar</button>
+                </div>
+                
+                <!-- Export Panel -->
+                <div class="panel-content active" id="export-panel">
+                    <div class="export-options">
+                        <div class="option-group">
+                            <label for="export-scope">Kapsam:</label>
+                            <select id="export-scope" aria-label="Dışa Aktarma Kapsamı">
+                                <option value="current">Seçili Klasör</option>
+                                <option value="all">Tüm Bookmark'lar</option>
+                                <option value="filtered">Filtrelenmiş Sonuçlar</option>
+                            </select>
+                        </div>
+                        
+                        <div class="option-group">
+                            <label for="export-format">Format:</label>
+                            <select id="export-format" aria-label="Dışa Aktarma Formatı">
+                                <option value="json">JSON (Yapılandırılmış)</option>
+                                <option value="html">HTML (Görsel)</option>
+                                <option value="csv">CSV (Excel)</option>
+                                <option value="txt">TXT (Basit Liste)</option>
+                                <option value="xml">XML (Yapılandırılmış)</option>
+                                <option value="markdown">Markdown</option>
+                            </select>
+                        </div>
+                        
+                        <div class="option-group">
+                            <label for="export-sort">Sıralama:</label>
+                            <select id="export-sort" aria-label="Dışa Aktarma Sıralaması">
+                                <option value="alphabetical">Alfabetik (A-Z)</option>
+                                <option value="alphabetical-desc">Alfabetik (Z-A)</option>
+                                <option value="domain">Site Bazlı</option>
+                                <option value="date">Tarih (Yeni-Eski)</option>
+                                <option value="date-desc">Tarih (Eski-Yeni)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="option-group">
+                            <label for="export-include">Dahil Et:</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="include-metadata" checked>
+                                    <span>Meta Veriler</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="include-folders" checked>
+                                    <span>Klasör Yapısı</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="include-domains">
+                                    <span>Domain Analizi</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="export-preview hidden" id="export-preview">
+                        <h4>Önizleme:</h4>
+                        <div class="preview-content" id="preview-content"></div>
+                    </div>
+                    
+                    <div class="export-actions">
+                        <button id="preview-export" class="action-btn secondary">
+                            <span class="icon">👁️</span>
+                            <span>Önizle</span>
+                        </button>
+                        <button id="execute-export" class="action-btn primary">
+                            <span class="icon">💾</span>
+                            <span>Dışa Aktar</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Import Panel -->
+                <div class="panel-content" id="import-panel">
+                    <div class="import-options">
+                        <div class="option-group">
+                            <label for="import-format">Format:</label>
+                            <select id="import-format" aria-label="İçe Aktarma Formatı">
+                                <option value="auto">Otomatik Tespit</option>
+                                <option value="json">JSON</option>
+                                <option value="html">HTML</option>
+                                <option value="csv">CSV</option>
+                                <option value="xml">XML</option>
+                                <option value="chrome">Chrome Export</option>
+                                <option value="firefox">Firefox Export</option>
+                            </select>
+                        </div>
+                        
+                        <div class="option-group">
+                            <label for="import-destination">Hedef:</label>
+                            <select id="import-destination" aria-label="İçe Aktarma Hedefi">
+                                <option value="new-folder">Yeni Klasör Oluştur</option>
+                                <option value="current-folder">Mevcut Klasöre Ekle</option>
+                                <option value="merge">Mevcutlerle Birleştir</option>
+                            </select>
+                        </div>
+                        
+                        <div class="option-group">
+                            <label for="import-handling">Çakışma Yönetimi:</label>
+                            <select id="import-handling" aria-label="Çakışma Yönetimi">
+                                <option value="skip">Çakışanları Atla</option>
+                                <option value="overwrite">Üzerine Yaz</option>
+                                <option value="rename">Yeniden Adlandır</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="file-drop-zone" id="file-drop-zone">
+                        <div class="drop-zone-content">
+                            <span class="icon">📁</span>
+                            <p>Dosyayı buraya sürükleyin veya tıklayın</p>
+                            <p class="file-info">Desteklenen formatlar: JSON, HTML, CSV, XML</p>
+                        </div>
+                        <input type="file" id="import-file-input" accept=".json,.html,.csv,.xml,.txt" class="hidden" aria-label="Dosya Seç">
+                    </div>
+                    
+                    <div class="import-preview hidden" id="import-preview">
+                        <h4>Önizleme:</h4>
+                        <div class="preview-stats" id="import-stats"></div>
+                        <div class="preview-list" id="import-list"></div>
+                    </div>
+                    
+                    <div class="import-actions">
+                        <button id="preview-import" class="action-btn secondary" disabled>
+                            <span class="icon">👁️</span>
+                            <span>Önizle</span>
+                        </button>
+                        <button id="execute-import" class="action-btn primary" disabled>
+                            <span class="icon">📥</span>
+                            <span>İçe Aktar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <span class="stat-icon">📑</span>
+                    <span class="stat-value" id="totalLinks">0</span>
+                    <span class="stat-label">Toplam</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">❌</span>
+                    <span class="stat-value" id="invalidLinks">0</span>
+                    <span class="stat-label">Geçersiz</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">✓</span>
+                    <span class="stat-value" id="checkedLinks">0</span>
+                    <span class="stat-label">Kontrol Edilen</span>
+                </div>
+            </div>
+
+            <!-- Gelişmiş Arama Bölümü -->
+            <div class="search-section hidden" id="search-section">
+                <div class="search-controls">
+                    <div class="search-input-group">
+                        <input type="text" id="search-input" placeholder="Bookmark ara..." aria-label="Arama">
+                        <button id="search-btn" class="icon-btn" title="Ara">
+                            <span class="icon">🔍</span>
+                        </button>
+                        <button id="clear-search" class="icon-btn" title="Temizle">
+                            <span class="icon">❌</span>
+                        </button>
+                    </div>
+                    <div class="search-filters">
+                        <select id="search-type" aria-label="Arama Tipi">
+                            <option value="all">Tüm Alanlar</option>
+                            <option value="title">Sadece Başlık</option>
+                            <option value="url">Sadece URL</option>
+                            <option value="domain">Sadece Domain</option>
+                        </select>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="regex-search">
+                            <span>Regex</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="case-sensitive">
+                            <span>Büyük/Küçük Harf</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="search-results-info hidden" id="search-results-info">
+                    <span id="search-count">0 sonuç bulundu</span>
+                </div>
+            </div>
+
+            <!-- İstatistikler Bölümü -->
+            <div class="statistics-section hidden" id="statistics-section">
+                <div class="stats-tabs">
+                    <button class="stats-tab active" data-tab="overview">Genel</button>
+                    <button class="stats-tab" data-tab="domains">Domainler</button>
+                    <button class="stats-tab" data-tab="dates">Tarihler</button>
+                    <button class="stats-tab" data-tab="usage">Kullanım</button>
+                </div>
+                
+                <div class="stats-content">
+                    <div class="stats-panel active" id="overview-panel">
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <span class="stat-label">Toplam Bookmark</span>
+                                <span class="stat-value" id="total-bookmarks">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Benzersiz Domain</span>
+                                <span class="stat-value" id="unique-domains">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Ortalama Yaş</span>
+                                <span class="stat-value" id="avg-age">0 gün</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">En Eski</span>
+                                <span class="stat-value" id="oldest-bookmark">-</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-panel" id="domains-panel">
+                        <div class="domain-stats" id="domain-stats">
+                            <!-- Domain istatistikleri buraya gelecek -->
+                        </div>
+                    </div>
+                    
+                    <div class="stats-panel" id="dates-panel">
+                        <div class="date-stats" id="date-stats">
+                            <!-- Tarih istatistikleri buraya gelecek -->
+                        </div>
+                    </div>
+                    
+                    <div class="stats-panel" id="usage-panel">
+                        <div class="usage-stats" id="usage-stats">
+                            <!-- Kullanım istatistikleri buraya gelecek -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-container hidden">
+                <div class="progress-info">
+                    <span class="progress-text">İşleniyor...</span>
+                    <span class="progress-count">0/0</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+
+            <div class="bookmark-list">
+                <div class="loading-spinner hidden"></div>
+                <div class="bookmarks-container">
+                    <!-- Yer imleri buraya gelecek -->
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button id="save-tabs" class="action-btn primary">
+                    <span class="icon">💾</span>
+                    <span>Sekmeler</span>
+                </button>
+                <button id="save-live" class="action-btn secondary">
+                    <div class="button-content">
+                        <span class="icon">📥</span>
+                        <span class="text">Canlı</span>
+                    </div>
+                    <div class="spinner hidden"></div>
+                </button>
+                <button id="delete-tabs" class="action-btn danger">
+                    <span class="icon">🗑️</span>
+                    <span>Tekrarları Sil</span>
+                </button>
+            </div>
+            
+            <div class="action-buttons">
+                <button id="toggle-export-import" class="action-btn export">
+                    <span class="icon">📤</span>
+                    <span>Export/Import</span>
+                </button>
+                <button id="bulk-operations" class="action-btn import">
+                    <span class="icon">⚡</span>
+                    <span>Toplu İşlemler</span>
+                </button>
+                <button id="toggle-search" class="action-btn secondary">
+                    <span class="icon">🔍</span>
+                    <span>Arama</span>
+                </button>
+            </div>
+
+            <div class="secondary-actions">
+                <button id="toggle-stats" class="action-btn secondary">
+                    <span class="icon">📊</span>
+                    <span>İstatistikler</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="status" class="status"></div>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-text">
+                    <span>Made with ❤️ by </span>
+                    <a href="https://github.com/MihrimatriX" rel="noopener" target="_blank" class="footer-link">By MihrimatriX</a>
+                </div>
+                <div class="footer-version">v1.0</div>
+            </div>
+        </footer>
+    </div>
+    <script src="popup.js"></script>
+</body>
+
+</html>
